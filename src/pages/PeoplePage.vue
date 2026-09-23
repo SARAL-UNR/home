@@ -24,8 +24,8 @@
           v-for="person in group.members"
           :key="person.id"
           cols="6"
-          sm="4"
-          md="3"
+          sm="3"
+          md="2"
         >
         <div
           class="person-card"
@@ -149,8 +149,8 @@ const people = ref([
     id: 13,
     slug: 'https://www.linkedin.com/in/vansh-sachdeva-b367a033b/',
     name: 'Vansh Sachdeva',
-    description: "Intern",
-    group: "Interns",
+    description: "Former Members",
+    group: "Former Members",
     years: '2026 - Present',
     photo: `${import.meta.env.BASE_URL}images/people/vansh-sachdeva.jpg`,
   },
@@ -194,7 +194,7 @@ const people = ref([
   } */
 ])
 
-const groupOrder = ["Lab Director", "PhD Students", "Master's Students", "Undergraduates", "Interns", "Phd Alumni", "Master's Alumni", "Bachelor's Alumni", "Previous Interns", "Former REU Students"]
+const groupOrder = ["Lab Director", "PhD Students", "Master's Students", "Undergraduates", "Interns", "Former Members", "Master's Alumni", "Bachelor's Alumni", "Previous Interns", "Former REU Students"]
 
 const groups = computed(() =>
   groupOrder
@@ -239,6 +239,8 @@ function handleClick(person) {
   display: flex;
   flex-direction: column;
 }
+
+
 
 /* Show pointer and hover effect only for people with a slug */
 .person-card--linked {

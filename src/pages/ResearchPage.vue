@@ -4,9 +4,6 @@
     <!-- Page Header -->
     <div class="mb-10">
       <h1 class="page-title mb-2">Research</h1>
-      <p class="text-medium-emphasis" style="font-size: 1.05rem;">
-        Research from the SARAL lab.
-      </p>
     </div>
 
     <!-- Groups -->
@@ -19,39 +16,29 @@
       </div>
 
       <!-- Project Cards -->
-      <v-row>
-        <v-col
+      <div class="projects-grid">
+        <v-card
           v-for="project in group.projects"
           :key="project.id"
-          cols="12"
-          sm="6"
+          flat
+          border
+          class="project-card pa-5"
+          :class="{ 'project-card--linked': project.slug }"
+          :ripple="false"
+          @click="handleClick(project)"
         >
-          <v-card
-            flat
-            border
-            class="project-card mb-4 pa-5"
-            :class="{ 'project-card--linked': project.slug }"
-            :ripple="false"
-            @click="handleClick(project)"
-          >
-            <!-- Title + arrow -->
-            <div class="d-flex align-center justify-space-between mb-1">
-              <div class="project-title">{{ project.title }}</div>
-              <v-icon v-if="project.slug" size="18" color="primary" class="ml-2">mdi-arrow-right</v-icon>
-            </div>
+          <!-- Title + arrow -->
+          <div class="d-flex align-center justify-space-between mb-1">
+            <div class="project-title">{{ project.title }}</div>
+            <v-icon v-if="project.slug" size="18" color="primary" class="ml-2">mdi-arrow-right</v-icon>
+          </div>
 
-            <!-- Preview image (first image only) -->
-            <div v-if="project.images && project.images.length > 0">
-              <v-img
-                :src="project.images[0].src"
-                rounded="lg"
-                max-height="400"
-                cover
-              />
-            </div>
-          </v-card>
-        </v-col>
-      </v-row>
+          <!-- Preview image -->
+          <div v-if="project.images && project.images.length > 0">
+            <v-img :src="project.images[0].src" rounded="lg" />
+          </div>
+        </v-card>
+      </div>
     </div>
   </v-container>
 </template>
@@ -63,23 +50,23 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const projects = ref([
-  {
-    id: 1,
-    slug: 'robohydra',
-    value: 'Current Research',
-    title: 'RoboHydra',
-    images: [
-      {
+  ///{
+    ///id: 1,
+    ///slug: 'robohydra',
+    ///value: 'Current Research',
+    ///title: 'RoboHydra',
+    ///images: [
+      ///{
         //src: `${import.meta.env.BASE_URL}images/projects/Hydra2.png`,
-        caption: 'RoboHydra',
-      },
-    ],
-  },
+        ///caption: 'RoboHydra',
+      ///},
+    ///],
+  ///},
   {
     id: 3,
     slug: 'rsms',
     value: 'Current Research',
-    title: 'Robotic Soil Moisture Sensing (RSMS)',
+    title: 'MoistureMapper: Robotic Soil Moisture Sensing',
     images: [
       {
         src: `${import.meta.env.BASE_URL}images/projects/RSMS1.png`,
@@ -139,7 +126,7 @@ function handleClick(project) {
 }
 
 // Show a short preview on the list card
-function truncate(text, max = 160) {
+function truncate(text, max = 40) {
   const trimmed = text.trim()
   return trimmed.length > max ? trimmed.slice(0, max).trimEnd() + '…' : trimmed
 }
@@ -161,7 +148,14 @@ function truncate(text, max = 160) {
   color: rgb(var(--v-theme-primary));
 }
 
+.projects-grid {
+  columns: 3;
+  column-gap: 16px;
+}
+
 .project-card {
+  break-inside: avoid;
+  margin-bottom: 16px;
   border-radius: 10px !important;
   transition: box-shadow 0.15s ease;
 }

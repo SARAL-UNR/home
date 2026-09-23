@@ -16,115 +16,99 @@
 
       <!-- Title + meta -->
       <h1 class="project-title mb-2">{{ project.title }}</h1>
-      <div class="project-meta text-medium-emphasis mb-6">{{ project.date }}</div>
-
-      <!-- People -->
-      <div v-if="project.team && project.team.length > 0" class="mb-8">
-        <div class="d-flex align-center mb-3">
-          <span class="section-label mr-4">Team</span>
-          <v-divider />
-        </div>
-        <div class="d-flex flex-wrap" style="gap: 4px;">
-          <v-btn
-            v-for="member in project.team"
-            :key="member.name"
-            v-bind="member.slug.startsWith('http')
-              ? { href: member.slug, target: '_blank' }
-              : { to: { name: 'people-individual', params: { slug: member.slug } } }"
-            variant="tonal"
-            color="primary"
-            size="small"
-            prepend-icon="mdi-account"
-            class="link-btn"
-          >
-            {{ member.name }}
-          </v-btn>
-        </div>
-      </div>
+      <!--<div class="project-meta text-medium-emphasis mb-6">{{ project.date }}</div> -->
 
       <!-- Description -->
       <div v-if="project.description" class="mb-8">
         <div class="d-flex align-center mb-3">
-          <span class="section-label mr-4">Overview</span>
+          <!-- <span class="section-label mr-4">Overview</span> -->
           <v-divider />
         </div>
         <p class="body-text">{{ project.description }}</p>
       </div>
 
-      <!-- Research Highlights -->
-      <div v-if="project.highlights && project.highlights.length > 0" class="mb-8">
-        <div class="d-flex align-center mb-3">
-          <span class="section-label mr-4">Highlights</span>
-          <v-divider />
-        </div>
-        <div class="d-flex flex-wrap style" style="gap: 4px;">
-          <v-chip
-            v-for="h in project.highlights"
-            :key="h"
-            color="primary"
-            variant="tonal"
-            size="small"
-            label
-          >
-            {{ h }}
-          </v-chip>
-        </div>
-      </div>
+<!-- Media Sections -->
+<div v-for="section in project.media" :key="section.conference" class="mb-8">
+  <div class="d-flex align-center mb-3">
+    <span class="section-label mr-4">{{ section.conference }}</span>
+    <v-divider />
+  </div>
 
-      <!-- Images -->
-      <div v-if="project.images && project.images.length > 0" class="mb-8">
-        <div class="d-flex align-center mb-3">
-          <span class="section-label mr-4">Images</span>
-          <v-divider />
-        </div>
-        <v-row>
-          <v-col
-            v-for="(img, i) in project.images"
-            :key="i"
-            :cols="project.images.length === 1 ? 12 : 6"
-          >
-          <div :style="img.rotation === 90 || img.rotation === 270 ? 'overflow: hidden; height: 300px;' : ''">
-            <v-img
-              :src="img.src"
-              rounded="lg"
-              :style="img.rotation ? `transform: rotate(${img.rotation}deg)` : ''"
-            />
-          </div>
-            <div v-if="img.caption" class="img-caption-below mt-1">{{ img.caption }}</div>
-          </v-col>
-        </v-row>
-      </div>
+  <!-- Video -->
+  <div v-if="section.video" class="mb-4">
+    <video :src="section.video" controls style="width: 100%; border-radius: 10px;" />
+    <p v-if="section.videoCaption" class="video-caption mt-2">{{ section.videoCaption }}</p>
+  </div>
 
-      <!-- Related Publications -->
-      <div v-if="project.publications && project.publications.length > 0" class="mb-8">
-        <div class="d-flex align-center mb-3">
-          <span class="section-label mr-4">Publications</span>
-          <v-divider />
-        </div>
-        <v-card
-          v-for="pub in project.publications"
-          :key="pub.title"
-          flat border
-          class="pub-card mb-3 pa-4"
-        >
-          <div class="pub-title mb-1">{{ pub.title }}</div>
-          <div class="pub-authors text-medium-emphasis mb-2">{{ pub.authors }}</div>
-          <div class="d-flex align-center flex-wrap" style="gap: 4px;">
-            <v-chip size="small" color="primary" variant="tonal" label>{{ pub.venue }}</v-chip>
-            <v-btn v-if="pub.pdfUrl"   :href="pub.pdfUrl"   target="_blank" variant="text" size="small" color="primary" prepend-icon="mdi-file-pdf-box"  class="link-btn">PDF</v-btn>
-            <v-btn v-if="pub.arxivUrl" :href="pub.arxivUrl" target="_blank" variant="text" size="small" color="primary" prepend-icon="mdi-open-in-new"    class="link-btn">arXiv</v-btn>
-            <v-btn v-if="pub.codeUrl"  :href="pub.codeUrl"  target="_blank" variant="text" size="small" color="primary" prepend-icon="mdi-github"         class="link-btn">Code</v-btn>
-          </div>
-        </v-card>
+  <!-- Images -->
+  <v-row v-if="section.images && section.images.length > 0">
+    <v-col
+      v-for="(img, i) in section.images"
+      :key="i"
+      :cols="section.images.length === 1 ? 12 : 6"
+    >
+      <div :style="img.rotation === 90 || img.rotation === 270 ? 'overflow: hidden; height: 300px;' : ''">
+        <v-img :src="img.src" rounded="lg" :style="img.rotation ? `transform: rotate(${img.rotation}deg)` : ''" />
       </div>
+      <div v-if="img.caption" class="img-caption-below mt-1">{{ img.caption }}</div>
+    </v-col>
+  </v-row>
 
+  <!-- Publications within this conference section -->
+  <div v-if="section.publications && section.publications.length > 0" class="mt-4">
+    <v-card
+      v-for="pub in section.publications"
+      :key="pub.title"
+      flat border
+      class="pub-card mb-3 pa-4"
+    >
+      <div class="pub-title mb-1">{{ pub.title }}</div>
+      <div class="pub-authors text-medium-emphasis mb-2">{{ pub.authors }}</div>
+      <div class="d-flex align-center flex-wrap" style="gap: 4px;">
+        <v-chip size="small" color="primary" variant="tonal" label>{{ pub.venue }}</v-chip>
+        <v-btn v-if="pub.pdfUrl" :href="pub.pdfUrl" target="_blank" variant="text" size="small" color="primary" prepend-icon="mdi-file-pdf-box" class="link-btn">PDF</v-btn>
+        <v-btn v-if="pub.arxivUrl" :href="pub.arxivUrl" target="_blank" variant="text" size="small" color="primary" prepend-icon="mdi-open-in-new" class="link-btn">arXiv</v-btn>
+        <v-btn v-if="pub.codeUrl" :href="pub.codeUrl" target="_blank" variant="text" size="small" color="primary" prepend-icon="mdi-github" class="link-btn">Code</v-btn>
+      </div>
+    </v-card>
+  </div>
+
+</div> 
+
+          <!-- Related Publications -->
+    <div class="mb-8">
+      <div class="d-flex align-center mb-3">
+        <span class="section-label mr-4">Publications, Datasets and Other Materials</span>
+        <v-divider />
+      </div>
+      <v-card
+        v-for="pub in project.publications"
+        :key="pub.title"
+        flat border
+        class="pub-card mb-3 pa-4"
+      >
+        <div class="pub-title mb-1">{{ pub.title }}</div>
+        <div class="pub-authors text-medium-emphasis mb-2">{{ pub.authors }}</div>
+        <div class="d-flex align-center flex-wrap" style="gap: 4px;">
+          <v-chip size="small" color="primary" variant="tonal" label>{{ pub.venue }}</v-chip>
+          <v-btn v-if="pub.pdfUrl" :href="pub.pdfUrl" target="_blank" variant="text" size="small" color="primary" prepend-icon="mdi-file-pdf-box" class="link-btn">PDF</v-btn>
+          <v-btn v-if="pub.arxivUrl" :href="pub.arxivUrl" target="_blank" variant="text" size="small" color="primary" prepend-icon="mdi-open-in-new" class="link-btn">arXiv</v-btn>
+          <v-btn v-if="pub.codeUrl" :href="pub.codeUrl" target="_blank" variant="text" size="small" color="primary" prepend-icon="mdi-github" class="link-btn">Code</v-btn>
+        </div>
+      </v-card>
+  
+      <!-- Empty state -->
+      <p v-if="!project.publications || project.publications.length === 0" class="text-medium-emphasis" style="font-size: 0.875rem;">
+        No publications, datasets, or other materials are associated with this project yet.
+      </p>
     </div>
 
-    <!-- 404 fallback -->
-    <div v-else class="text-center py-16">
-      <div class="text-h5 mb-2">Project not found</div>
-      <v-btn :to="{ name: 'projects' }" color="primary" variant="tonal">Back to Research</v-btn>
-    </div>
+</div>
+
+    <!-- Empty state -->
+    <p v-else class="text-medium-emphasis" style="font-size: 0.875rem;">
+      Project not found.
+    </p>
 
   </v-container>
 </template>
@@ -157,24 +141,29 @@ const projects = [
     ],
   },
   {
-    slug: 'rsms',
-    title: 'Robotic Soil Moisture Sensing (RSMS)',
-    people: 'Nathaniel Rose, Hannah Chung',
-    date: 'Jun 2023 - Present',
-    description: `The MoistureMapper is an autonomous robot that can measure soil moisture at points of interest of a farm plot. The goal is to build a comprehensive map of the soil moisture across the field.`,
-    highlights: ['Autonomous navigation', 'Soil sensing', 'Agricultural robotics'],
-    images: [
-      { src: `${import.meta.env.BASE_URL}images/projects/RSMS1.png`, caption: '' },
-      { src: `${import.meta.env.BASE_URL}images/projects/RSMS2.png`, caption: '' },
-      { src: `${import.meta.env.BASE_URL}images/projects/RSMS3.png`, caption: '' },
-      { src: `${import.meta.env.BASE_URL}images/projects/RSMS4.png`, caption: '' },
-    ],
-    publications: [],
-    team: [
-      { name: 'Nathaniel Rose', slug: 'nathaniel-rose' },
-      { name: 'Hannah Chung',   slug: 'hannah-chung' },
-    ],
+  slug: 'rsms',
+  title: 'MoistureMapper: Robotic Soil Moisture Sensing',
+  description: `The MoistureMapper is an autonomous robot that can measure soil moisture at points of interest of a farm plot. The goal is to build a comprehensive map of the soil moisture across the field.`,
+  media: [
+    {
+      conference: 'IROS 2026',
+      video: `${import.meta.env.BASE_URL}videos/RSMSvid1.mp4`,
+      videoCaption: 'MoistureMapper navigating a farm plot.',
+      images: [],
+    },
+    {
+      conference: 'CASE 2025',
+      video: null,
+      videoCaption: '',
+      images: [
+        { src: `${import.meta.env.BASE_URL}images/projects/RSMS1.png`, caption: '' },
+        //{ src: `${import.meta.env.BASE_URL}images/projects/RSMS2.png`, caption: '' },
+      ],
+    },
+  ],
+  publications: [],
   },
+
   {
     slug: 'stability-aware-navigation',
     title: 'Stability Aware Navigation',
@@ -295,6 +284,12 @@ const project = computed(() =>
   color: rgba(var(--v-theme-on-surface), 0.55);
   text-align: center;
   line-height: 1.4;
+}
+
+.video-caption {
+  font-size: 0.825rem;
+  line-height: 1.6;
+  color: rgba(var(--v-theme-on-surface), 0.7);
 }
 
 .pub-card {
