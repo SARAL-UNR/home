@@ -222,6 +222,13 @@
     <link rel="preload" as="font" type="font/woff" href="/home/assets/roboto-vietnamese-900-normal-C48YQOjq.woff" crossorigin="anonymous">
     <link rel="preload" as="font" type="font/woff2" href="/home/assets/roboto-vietnamese-900-normal-D-H2ldSl.woff2" crossorigin="anonymous">
 
+    <script>
+      const redirectPath = sessionStorage.getItem('redirectPath');
+      if (redirectPath) {
+        sessionStorage.removeItem('redirectPath');
+        window.history.replaceState(null, '', redirectPath);
+      }
+    </script>
     <meta charset="UTF-8">
     <link rel="icon" href="/home/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
