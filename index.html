@@ -2,11 +2,13 @@
 <html lang="en">
   <head>
     <script>
-      const redirectPath = sessionStorage.getItem('redirectPath');
-      if (redirectPath) {
-        sessionStorage.removeItem('redirectPath');
-        window.history.replaceState(null, '', redirectPath);
-      }
+      (function() {
+        const redirectPath = sessionStorage.getItem('redirectPath');
+        if (redirectPath) {
+          sessionStorage.removeItem('redirectPath');
+          window.history.replaceState(null, '', redirectPath);
+        }
+      })();
     </script>
     <meta charset="UTF-8">
     <link rel="icon" href="/favicon.png">
