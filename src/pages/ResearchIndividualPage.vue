@@ -34,10 +34,22 @@
     <v-divider />
   </div>
 
-  <!-- Video -->
-  <div v-if="section.video" class="mb-4">
-    <video :src="section.video" controls style="width: 100%; border-radius: 10px;" />
-    <p v-if="section.videoCaption" class="video-caption mt-2">{{ section.videoCaption }}</p>
+  <div v-for="(vid, i) in section.videos" :key="i" class="mb-4">
+    <!-- YouTube embed -->
+    <iframe
+      v-if="vid.type === 'youtube'"
+      :src="vid.src"
+      style="width: 100%; aspect-ratio: 16/9; border-radius: 10px; border: none;"
+      allowfullscreen
+    />
+    <!-- Local video -->
+    <video
+      v-else
+      :src="vid.src"
+      controls
+      style="width: 100%; border-radius: 10px;"
+    />
+    <p v-if="vid.caption" class="video-caption mt-2">{{ vid.caption }}</p>
   </div>
 
   <!-- Images -->
@@ -146,22 +158,59 @@ const projects = [
   description: `The MoistureMapper is an autonomous robot that can measure soil moisture at points of interest of a farm plot. The goal is to build a comprehensive map of the soil moisture across the field.`,
   media: [
     {
-      conference: 'IROS 2026',
-      video: `${import.meta.env.BASE_URL}videos/RSMSvid1.mp4`,
-      videoCaption: 'MoistureMapper navigating a farm plot.',
+      conference: 'ICRA 2027',
+      videos: [
+        {
+          src: `${import.meta.env.BASE_URL}videos/RSMS_ICRA2027_1.mp4`,
+          //caption: 'MoistureMapper navigating a farm plot.',
+          type: 'local'
+        },
+        {
+          src: `${import.meta.env.BASE_URL}videos/RSMS_ICRA2027_2.mp4`,
+          //caption: 'MoistureMapper navigating a field.',
+          type: 'local'
+        },
+      ],
       images: [],
+      publications: [
+      ],
+    },
+    {
+      conference: 'IROS 2026',
+      videos: [
+        {
+          src: `https://www.youtube.com/embed/eHAamgfhVQw`,
+          //caption: 'MoistureMapper navigating a farm plot.',
+          type: 'youtube'
+        }
+      ],
+      images: [],
+      publications: [],
     },
     {
       conference: 'CASE 2025',
-      video: null,
-      videoCaption: '',
-      images: [
-        { src: `${import.meta.env.BASE_URL}images/projects/RSMS1.png`, caption: '' },
-        //{ src: `${import.meta.env.BASE_URL}images/projects/RSMS2.png`, caption: '' },
+      videos: [
+        {
+          // Youtube link
+          src: `https://www.youtube.com/embed/S4bJ4tRzObg`,
+          //caption: 'MoistureMapper navigating a farm plot.',
+          type: 'youtube'
+        },
+      ],
+      images: [],
+      publications: [
+        {
+          title: 'MoistureMapper: An Autonomous Mobile Robot for High-Resolution Soil Moisture Mapping at Scale',
+          authors: 'Nathaniel Rose, Hannah Chuang, Manuel A Andrade-Rodriguez, Rishi Parashar, Dani Or, Parikshit Maini',
+          venue: '2025 IEEE 21st International Conference on Automation Science and Engineering (CASE)',
+          type: 'conference',
+          review: false,
+          url: 'https://ieeexplore.ieee.org/document/11163809',
+        },
       ],
     },
   ],
-  publications: [],
+  
   },
 
   {
@@ -290,6 +339,7 @@ const project = computed(() =>
   font-size: 0.825rem;
   line-height: 1.6;
   color: rgba(var(--v-theme-on-surface), 0.7);
+  text-align: center;
 }
 
 .pub-card {
