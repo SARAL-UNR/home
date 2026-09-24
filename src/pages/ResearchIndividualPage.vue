@@ -89,10 +89,12 @@
 
           <!-- Related Publications -->
     <div class="mb-8">
+      <!--
       <div class="d-flex align-center mb-3">
         <span class="section-label mr-4">Publications, Datasets and Other Materials</span>
         <v-divider />
       </div>
+    -->
       <v-card
         v-for="pub in project.publications"
         :key="pub.title"
@@ -109,10 +111,11 @@
         </div>
       </v-card>
   
-      <!-- Empty state -->
+      <!-- Empty state
       <p v-if="!project.publications || project.publications.length === 0" class="text-medium-emphasis" style="font-size: 0.875rem;">
         No publications, datasets, or other materials are associated with this project yet.
       </p>
+    -->
     </div>
 
 </div>
@@ -152,6 +155,7 @@ const projects = [
       { name: 'Emanuel Gutierrez-Cornejo', slug: 'emanuel-gutierrez-cornejo' },
     ],
   },
+
   {
   slug: 'rsms',
   title: 'MoistureMapper: Robotic Soil Moisture Sensing',
@@ -172,8 +176,7 @@ const projects = [
         },
       ],
       images: [],
-      publications: [
-      ],
+      publications: [],
     },
     {
       conference: 'IROS 2026',
@@ -206,34 +209,51 @@ const projects = [
           type: 'conference',
           review: false,
           url: 'https://ieeexplore.ieee.org/document/11163809',
-        },
-      ],
-    },
-  ],
+          },
+        ],
+      },
+    ],
   
   },
 
   {
     slug: 'stability-aware-navigation',
     title: 'Stability Aware Navigation',
-    people: 'Emanuel Gutierrez-Cornejo, Arif Ahmed, Nathaniel Rose, Dominic Palmieri',
-    date: 'June 2024 - Present',
-    description: `The goal is to predict a robot stability score between 0 and 1. We do this by training a novel vision-based stability metric using count-circle-crossings (C3) score. The method is a data-based learning network trained on C3 score to learn current stability from IMU and velocity.`,
-    highlights: ['Stability prediction', 'IMU sensing', 'Deep learning'],
+    description: `During off-road navigation wheeled mobile robots experience terrain-induced disturbances that can degrade on-board task performance. 
+    To account for traversal roughness and to design roughness-aware navigation controllers, quantification of robot-terrain interaction becomes imperative. 
+    Existing measures of traversal roughness are often derived directly from proprioceptive signals. These IMU-derived metrics are widely used as supervisory 
+    signals in learning based navigation controllers. However, it is hard to independently evaluate the robustness of these metrics to capture the 
+    disturbances experienced by the robot and the effect of signal noise. In this work, we introduce the Count-Circles-Crossed (C3) score,
+    an interpretable vision-based metric that quantifies terrain-induced platform disturbance by measuring the image frame displacement of a static reference 
+    over a time window. C3 provides an exteroceptive measure of platform disturbance that is independent of proprioceptive measurements. 
+    We compare and contrast C3 with commonly used IMU-derived roughness measures and show that it captures traversal roughness across different terrains 
+    and speeds. We then use C3 as a supervisory signal to train a LIMU-BERT architecture based prediction model to learn a mapping from onboard IMU and speed 
+    measurements to traversal roughness (C3). This allows us to still use proprioceptive sensing for online roughness estimation validated using independent 
+    sensor measurements while removing the need for image processing during deployment.`,
+
     images: [
       { src: `${import.meta.env.BASE_URL}images/projects/C31.png`, caption: '' },
       { src: `${import.meta.env.BASE_URL}images/projects/C32.jpeg`, caption: '' },
       { src: `${import.meta.env.BASE_URL}images/projects/C33.png`, caption: '' },
       { src: `${import.meta.env.BASE_URL}images/projects/C34.png`, caption: '', rotation: 90 },
+      { src: `${import.meta.env.BASE_URL}images/projects/C35.png`, caption: ''},
     ],
-    publications: [],
-    team: [
-      { name: 'Emanuel Gutierrez-Cornejo', slug: 'emanuel-gutierrez-cornejo' },
-      { name: 'Arif Ahmed', slug: 'arif-ahmed' },
-      { name: 'Nathaniel Rose', slug: 'nathaniel-rose' },
-      { name: 'Dominic Palmieri', slug: 'dominic-palmieri' },
-    ],
-  },
+      media: [
+        {
+          conference: 'General',
+          videos: [],
+          images: [
+            { src: `${import.meta.env.BASE_URL}images/projects/C31.png`, caption: '' },
+            { src: `${import.meta.env.BASE_URL}images/projects/C32.jpeg`, caption: '' },
+            { src: `${import.meta.env.BASE_URL}images/projects/C33.png`, caption: '' },
+            { src: `${import.meta.env.BASE_URL}images/projects/C34.png`, caption: '', rotation: 90 },
+            { src: `${import.meta.env.BASE_URL}images/projects/C35.png`, caption: ''},
+          ],
+        publications: [
+          ],
+        },
+      ],
+    },
   {
     slug: 'plant-phenotyping-lai',
     title: 'Plant Phenotyping: Leaf Area Index (LAI)',
@@ -261,23 +281,45 @@ const projects = [
     title: 'Autonomous Drone Sprayer',
     people: 'Jairo Cadena-Mendez, Yovan Hirales',
     date: 'Sep 2026 - Present',
-    description: `Drone based precision spraying of agrochemicals on a field-wide scale. Work with farmers and breeders to apply treatments to corn, sorghum, and onion crops.`,
+    description: `This project consists of an autonomous drone that precisely applies chemicals to sorghum whorls, which are developing leaves fr
+    om the plant's main stalk, to improve selective plant breeding processes. This is achieved through four subsystems: perception, 
+    embedded systems, visual servoing, and controls. The drone is able to fly missions autonomously, recognize the whorl through its AI model, 
+    maneuver itself over the plant, apply the chemical, and continue its progress throughout an entire field. This has widespread global implications, 
+    as it makes selective breeding easier, enabling plants to be more drought-resistant and increasing crop yields. It also removes the need for humans 
+    to manually apply these chemicals, reducing labor costs and exposure to dangerous chemicals.`,
     highlights: ['Precision spraying', 'Plant breeding', 'Agronomy'],
     images: [
       { src: `${import.meta.env.BASE_URL}images/projects/Spray1.png`, caption: '' },
     ],
     publications: [],
-    team: [
-      { name: 'Jairo Cadena-Mendez', slug: 'jairo-cadena-mendez' },
-      { name: 'Yovan Hirales', slug: 'yovan-hirales' },
-    ],
+    media: [
+        {
+          conference: 'General',
+          videos: [
+            {
+              src: `${import.meta.env.BASE_URL}videos/Spray_Gen_1.mp4`,
+              //caption: 'MoistureMapper navigating a farm plot.',
+              type: 'local'
+            },
+            {
+              src: `${import.meta.env.BASE_URL}videos/Spray_Gen_2.mp4`,
+              //caption: 'MoistureMapper navigating a field.',
+              type: 'local'
+            },
+          ],
+          images: [
+          ],
+          }
+        ]
   },
   {
     slug: 'ground-air-robotics',
     title: 'Ground-Air Robotics',
     people: 'Jairo Cadena-Mendez',
     date: 'DATES HERE',
-    description: `Description Here`,
+    description: `The Ground-Air Robotics Collaboration is a cooperative autonomous system designed to extend the operational range of a UAV 
+    by using a UGV as a mobile refueling station where both vehicles coordinate to meet at feasible rendezvous points. The objective is to develop an 
+    online replanner that dynamically adapts to stochastic variables the UAV may encounter while visiting its targets.`,
     highlights: ['Ground-air robotics', 'Multi-robot systems', 'Robotic coordination'],
     images: [
       { src: `${import.meta.env.BASE_URL}images/projects/GAC1.png`, caption: '' },
@@ -325,7 +367,6 @@ const project = computed(() =>
 .body-text {
   font-size: 0.9rem;
   line-height: 1.7;
-  white-space: pre-line;
 }
 
 .img-caption-below {
