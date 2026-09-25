@@ -321,10 +321,23 @@ const projects = [
     by using a UGV as a mobile refueling station where both vehicles coordinate to meet at feasible rendezvous points. The objective is to develop an 
     online replanner that dynamically adapts to stochastic variables the UAV may encounter while visiting its targets.`,
     highlights: ['Ground-air robotics', 'Multi-robot systems', 'Robotic coordination'],
-    images: [
-      { src: `${import.meta.env.BASE_URL}images/projects/GAC1.png`, caption: '' },
-      { src: `${import.meta.env.BASE_URL}images/projects/GAC2.png`, caption: '' },
+
+    media: [
+      {
+        conference: 'General',
+        videos: [
+          {
+            src: `${import.meta.env.BASE_URL}videos/GAC_Gen_1.mp4`,
+            //caption: 'MoistureMapper navigating a farm plot.',
+            type: 'local'
+          },
+        ],
+        images: [
+        ],
+        publications: [],
+      }
     ],
+
     publications: [],
     team: [
       { name: 'Jairo Cadena-Mendez', slug: 'jairo-cadena-mendez' },
